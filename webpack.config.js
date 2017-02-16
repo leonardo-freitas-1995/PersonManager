@@ -1,7 +1,3 @@
-var webpack = require('webpack');
-
-var ENV = process.env.NODE_ENV || 'development';
-
 module.exports = {
     entry: {
         "bundle": './app/js/app.js',
@@ -25,12 +21,5 @@ module.exports = {
                 loader: 'css-loader!stylus-loader?paths=app/stylus/'
             }
         ]
-    },
-    plugins: ENV === 'production' ? [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false }
-        }),
-
-    ] : [
-        ]
+    }
 };

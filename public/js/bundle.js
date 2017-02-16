@@ -21794,7 +21794,7 @@ var _Home2 = _interopRequireDefault(_Home);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var css = __webpack_require__(81);
+var mainCss = __webpack_require__(81);
 
 _reactDom2.default.render(_react2.default.createElement(_Home2.default, null), document.getElementById('react-app'));
 

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "bundle": "webpack",
+    "bundle-min": "webpack --optimize-minimize",
     "start-dev": "set NODE_ENV=development&& nodemon server.js",
     "build-dev": "gulp build-dev"
   },
