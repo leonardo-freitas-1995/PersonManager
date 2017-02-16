@@ -1,6 +1,6 @@
 module.exports = {
     entry: {
-        "bundle": './app/js/app.js',
+        "bundle": './app/App.js',
     },
     output: {
         path: "./public/js",
@@ -15,10 +15,6 @@ module.exports = {
                 query: {
                     presets: ['es2015', 'react']
                 }
-            },
-            {
-                test: /\.styl$/,
-                loader: 'css-loader!stylus-loader?paths=app/stylus/'
             }
         ]
     }
