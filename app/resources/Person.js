@@ -14,7 +14,7 @@ class Person {
             .catch(error => {
                 reject("error");
             })
-        })
+        });
     }
 
     static getSomeone(id){
@@ -27,7 +27,7 @@ class Person {
                 console.log(error);
                 reject("error");
             })
-        })
+        });
     }
 
     static createNewPerson(data){
@@ -39,7 +39,7 @@ class Person {
                 .catch(error => {
                     reject("error");
                 })
-        })
+        });
     }
 
     static editPerson(id, data){
@@ -51,7 +51,19 @@ class Person {
                 .catch(error => {
                     reject("error");
                 })
-        })
+        });
+    }
+
+    static deletePerson(id){
+        return new Promise((resolve, reject) => {
+            _resource.remove({}, {id})
+                .then(data => {
+                    resolve();
+                })
+                .catch(error => {
+                    reject("error");
+                })
+        });
     }
 
 }

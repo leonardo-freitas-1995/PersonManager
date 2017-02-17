@@ -8,6 +8,7 @@ module.exports = function (app) {
 
     app.route("/api/person/:id")
         .get(personController.getSomeone)
+        .delete(personController.deletePerson)
         .put(personController.updatePerson);
 
 };

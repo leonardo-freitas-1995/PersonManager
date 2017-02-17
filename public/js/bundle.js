@@ -45233,6 +45233,17 @@ var Person = function () {
                 });
             });
         }
+    }, {
+        key: "deletePerson",
+        value: function deletePerson(id) {
+            return new Promise(function (resolve, reject) {
+                _resource.remove({}, { id: id }).then(function (data) {
+                    resolve();
+                }).catch(function (error) {
+                    reject("error");
+                });
+            });
+        }
     }]);
 
     return Person;
@@ -47393,6 +47404,11 @@ var PersonRow = function (_React$Component) {
                         _reactRouter.Link,
                         { to: '/edit_person/' + this.props.person._id },
                         _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pencil' })
+                    ),
+                    _react2.default.createElement(
+                        'a',
+                        { onClick: this._deletePerson.bind(this), href: 'javascript:void(0)' },
+                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
                     )
                 )
             );
@@ -47433,6 +47449,11 @@ var PersonRow = function (_React$Component) {
             }
 
             return "";
+        }
+    }, {
+        key: '_deletePerson',
+        value: function _deletePerson() {
+            this.props.remove(this.props.person);
         }
     }]);
 
@@ -47485,7 +47506,8 @@ var PersonTable = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (PersonTable.__proto__ || Object.getPrototypeOf(PersonTable)).call(this));
 
         _this.state = {
-            people: []
+            people: [],
+            showDeleteModal: false
         };
         return _this;
     }
@@ -47494,58 +47516,124 @@ var PersonTable = function (_React$Component) {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                _reactBootstrap.Table,
-                { striped: true, hover: true },
+                'div',
+                null,
                 _react2.default.createElement(
-                    'thead',
-                    null,
+                    _reactBootstrap.Table,
+                    { striped: true, hover: true },
                     _react2.default.createElement(
-                        'tr',
+                        'thead',
                         null,
                         _react2.default.createElement(
-                            'th',
+                            'tr',
                             null,
-                            '#'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Nome'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Email'
-                        ),
-                        _react2.default.createElement(
-                            'th',
-                            null,
-                            'Contato principal'
-                        ),
-                        _react2.default.createElement('th', null)
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                '#'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Nome'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Email'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Contato principal'
+                            ),
+                            _react2.default.createElement('th', null)
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        this._getPersonRows()
                     )
                 ),
                 _react2.default.createElement(
-                    'tbody',
-                    null,
-                    this._getPersonRows()
+                    _reactBootstrap.Modal,
+                    { show: this.state.showDeleteModal, onHide: this._closeModal.bind(this) },
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
+                        _react2.default.createElement(
+                            _reactBootstrap.Modal.Title,
+                            null,
+                            'Deletar contato'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Body,
+                        null,
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Deseja mesmo deletar o contato ',
+                            this.state.deletingName,
+                            '?'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Button,
+                            { onClick: this._closeModal.bind(this) },
+                            'Cancelar'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Button,
+                            { bsStyle: 'danger', onClick: this._deletePerson.bind(this) },
+                            'Deletar'
+                        )
+                    )
                 )
             );
         }
     }, {
         key: '_getPersonRows',
         value: function _getPersonRows() {
+            var _this2 = this;
+
             return this.state.people.map(function (person, index) {
-                return _react2.default.createElement(_PersonRow2.default, { index: index + 1, person: person, key: index });
+                return _react2.default.createElement(_PersonRow2.default, { index: index + 1, person: person, remove: _this2._openDeleteModal.bind(_this2), key: index });
+            });
+        }
+    }, {
+        key: '_closeModal',
+        value: function _closeModal() {
+            this.setState({ showDeleteModal: false });
+        }
+    }, {
+        key: '_openDeleteModal',
+        value: function _openDeleteModal(person) {
+            this.setState({ showDeleteModal: true, deletingName: person.name, deletingID: person._id });
+        }
+    }, {
+        key: '_deletePerson',
+        value: function _deletePerson() {
+            var _this3 = this;
+
+            _Person2.default.deletePerson(this.state.deletingID).then(function () {
+                _this3.setState({ showDeleteModal: false });
+                _Person2.default.getEveryone().then(function (people) {
+                    _this3.setState({ people: people });
+                });
             });
         }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this2 = this;
+            var _this4 = this;
 
             _Person2.default.getEveryone().then(function (people) {
-                _this2.setState({ people: people });
+                _this4.setState({ people: people });
             });
         }
     }]);

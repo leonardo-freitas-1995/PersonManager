@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
 
 class PersonRow extends React.Component {
+
     render(){
         return (
             <tr>
@@ -12,6 +13,7 @@ class PersonRow extends React.Component {
                 <td>{this._getMainContact()}</td>
                 <td>
                     <Link to={`/edit_person/${this.props.person._id}`}><Glyphicon glyph="pencil" /></Link>
+                    <a onClick={this._deletePerson.bind(this)} href="javascript:void(0)"><Glyphicon glyph="trash" /></a>
                 </td>
             </tr>
         )
@@ -30,6 +32,10 @@ class PersonRow extends React.Component {
         }
 
         return "";
+    }
+
+    _deletePerson(){
+        this.props.remove(this.props.person);
     }
 
 }

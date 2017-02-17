@@ -52,5 +52,17 @@ module.exports = function(app){
         });
     };
 
+    controller.deletePerson = (req, res) => {
+        let id = req.params.id;
+
+        Person.remove({_id: id}).exec((error, newPerson) => {
+            if (error){
+                return res.status(503).send();
+            }
+
+            res.send({newPerson});
+        });
+    };
+
     return controller;
 };
