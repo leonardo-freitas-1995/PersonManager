@@ -7,7 +7,7 @@ class AppNavbar extends React.Component{
             <Navbar inverse fixedTop>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/">Person Manager</a>
+                        <a href="/index">Person Manager</a>
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>

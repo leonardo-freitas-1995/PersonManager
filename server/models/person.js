@@ -9,7 +9,8 @@ module.exports =  function(){
         email: String,
         numbers: [{
             description: String,
-            number: Number
+            number: String,
+            main: Boolean
         }]
     });
 
