@@ -1,10 +1,12 @@
 module.exports = function (app) {
 
-    app.get('/partials/*', (req, res) => {
-        res.render(`../../public/partials/${req.params[0]}`);
+    app.all("/api/*", (req, res) => {
+        res.send(404);
     });
 
-    app.get('/templates/*', (req, res) => {
-        res.render(`../../public/partials/templates/${req.params[0]}`);
+    app.get('*', (req, res) => {
+        res.render('index', {
+            bootstrappedUser: req.user
+        });
     });
 };
