@@ -9,7 +9,7 @@ class NewPersonPage extends React.Component {
         super();
 
         this.state = {
-            newContact: {
+            editContact: {
                 name: "",
                 email: "",
                 gender: "male",
@@ -38,13 +38,13 @@ class NewPersonPage extends React.Component {
                             </h4>
                             <hr/>
                             <PersonForm
-                                person={this.state.newContact}
+                                person={this.state.editContact}
                                 finish={this._savePerson.bind(this)}
                                 fail={this._handleFailAlert.bind(this)}
                             />
                             <br/>
                             <br/>
-                            {this._getCreationAlert()}
+                            {this._getAlert()}
                         </Well>
                     </Col>
                 </Row>
@@ -53,7 +53,7 @@ class NewPersonPage extends React.Component {
     }
 
 
-    _getCreationAlert(){
+    _getAlert(){
         if (this.state.showCreationAlert){
             return (
                 <Alert bsStyle="success" onDismiss={this._handleAlert.bind(this)}>
@@ -80,7 +80,7 @@ class NewPersonPage extends React.Component {
     }
 
     _savePerson(){
-        Person.createNewPerson(this.state.newContact).then(() => {
+        Person.createNewPerson(this.state.editContact).then(() => {
             let newPerson = {
                 name: "",
                 email: "",

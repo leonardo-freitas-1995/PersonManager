@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import {Glyphicon} from 'react-bootstrap';
 
 class PersonRow extends React.Component {
     render(){
@@ -9,6 +10,9 @@ class PersonRow extends React.Component {
                 <td><Link to={`/person/${this.props.person._id}`}>{this.props.person.name}</Link></td>
                 <td>{this.props.person.email}</td>
                 <td>{this._getMainContact()}</td>
+                <td>
+                    <Link to={`/edit_person/${this.props.person._id}`}><Glyphicon glyph="pencil" /></Link>
+                </td>
             </tr>
         )
     }

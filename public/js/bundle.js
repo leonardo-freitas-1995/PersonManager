@@ -45118,6 +45118,10 @@ var _NewPersonPage = __webpack_require__(526);
 
 var _NewPersonPage2 = _interopRequireDefault(_NewPersonPage);
 
+var _EditPersonPage = __webpack_require__(529);
+
+var _EditPersonPage2 = _interopRequireDefault(_EditPersonPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45144,6 +45148,7 @@ var AppRoutes = function (_React$Component) {
                 _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/index' }),
                 _react2.default.createElement(_reactRouter.Route, { path: '/index', component: _IndexPage2.default }),
                 _react2.default.createElement(_reactRouter.Route, { path: '/new_person', component: _NewPersonPage2.default }),
+                _react2.default.createElement(_reactRouter.Route, { path: '/edit_person/:id', component: _EditPersonPage2.default }),
                 _react2.default.createElement(_reactRouter.Route, { path: '/person/:id', component: _PersonPage2.default })
             );
         }
@@ -45212,6 +45217,17 @@ var Person = function () {
             return new Promise(function (resolve, reject) {
                 _resource.post(data).then(function (data) {
                     resolve(data.newPerson);
+                }).catch(function (error) {
+                    reject("error");
+                });
+            });
+        }
+    }, {
+        key: "editPerson",
+        value: function editPerson(id, data) {
+            return new Promise(function (resolve, reject) {
+                _resource.put(data, { id: id }).then(function (data) {
+                    resolve();
                 }).catch(function (error) {
                     reject("error");
                 });
@@ -47321,6 +47337,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = __webpack_require__(481);
 
+var _reactBootstrap = __webpack_require__(371);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47367,6 +47385,15 @@ var PersonRow = function (_React$Component) {
                     'td',
                     null,
                     this._getMainContact()
+                ),
+                _react2.default.createElement(
+                    'td',
+                    null,
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/edit_person/' + this.props.person._id },
+                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pencil' })
+                    )
                 )
             );
         }
@@ -47494,7 +47521,8 @@ var PersonTable = function (_React$Component) {
                             'th',
                             null,
                             'Contato principal'
-                        )
+                        ),
+                        _react2.default.createElement('th', null)
                     )
                 ),
                 _react2.default.createElement(
@@ -47967,7 +47995,7 @@ var NewPersonPage = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (NewPersonPage.__proto__ || Object.getPrototypeOf(NewPersonPage)).call(this));
 
         _this.state = {
-            newContact: {
+            editContact: {
                 name: "",
                 email: "",
                 gender: "male",
@@ -48006,21 +48034,21 @@ var NewPersonPage = function (_React$Component) {
                             ),
                             _react2.default.createElement('hr', null),
                             _react2.default.createElement(_PersonForm2.default, {
-                                person: this.state.newContact,
+                                person: this.state.editContact,
                                 finish: this._savePerson.bind(this),
                                 fail: this._handleFailAlert.bind(this)
                             }),
                             _react2.default.createElement('br', null),
                             _react2.default.createElement('br', null),
-                            this._getCreationAlert()
+                            this._getAlert()
                         )
                     )
                 )
             );
         }
     }, {
-        key: '_getCreationAlert',
-        value: function _getCreationAlert() {
+        key: '_getAlert',
+        value: function _getAlert() {
             if (this.state.showCreationAlert) {
                 return _react2.default.createElement(
                     _reactBootstrap.Alert,
@@ -48059,7 +48087,7 @@ var NewPersonPage = function (_React$Component) {
         value: function _savePerson() {
             var _this2 = this;
 
-            _Person2.default.createNewPerson(this.state.newContact).then(function () {
+            _Person2.default.createNewPerson(this.state.editContact).then(function () {
                 var newPerson = {
                     name: "",
                     email: "",
@@ -48426,6 +48454,168 @@ var PersonForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = PersonForm;
+
+/***/ }),
+/* 529 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _PersonForm = __webpack_require__(528);
+
+var _PersonForm2 = _interopRequireDefault(_PersonForm);
+
+var _reactBootstrap = __webpack_require__(371);
+
+var _Person = __webpack_require__(508);
+
+var _Person2 = _interopRequireDefault(_Person);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NewPersonPage = function (_React$Component) {
+    _inherits(NewPersonPage, _React$Component);
+
+    function NewPersonPage() {
+        _classCallCheck(this, NewPersonPage);
+
+        var _this = _possibleConstructorReturn(this, (NewPersonPage.__proto__ || Object.getPrototypeOf(NewPersonPage)).call(this));
+
+        _this.state = {
+            contactName: "",
+            notFound: false
+        };
+        return _this;
+    }
+
+    _createClass(NewPersonPage, [{
+        key: 'render',
+        value: function render() {
+            if (this.state.editContact) {
+                return _react2.default.createElement(
+                    _reactBootstrap.Grid,
+                    null,
+                    _react2.default.createElement(
+                        _reactBootstrap.Row,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { lg: 6, md: 8, sm: 12, lgOffset: 3, mdOffset: 2 },
+                            _react2.default.createElement(
+                                _reactBootstrap.Well,
+                                null,
+                                _react2.default.createElement(
+                                    'h4',
+                                    null,
+                                    'Editar Contato - ',
+                                    this.state.contactName
+                                ),
+                                _react2.default.createElement('hr', null),
+                                _react2.default.createElement(_PersonForm2.default, {
+                                    person: this.state.editContact,
+                                    finish: this._savePerson.bind(this),
+                                    fail: this._handleFailAlert.bind(this)
+                                }),
+                                _react2.default.createElement('br', null),
+                                _react2.default.createElement('br', null),
+                                this._getAlert()
+                            )
+                        )
+                    )
+                );
+            } else if (this.state.notFound) {
+                return _react2.default.createElement(
+                    'h4',
+                    { className: 'center-align' },
+                    'Usu\xE1rio n\xE3o encontrado'
+                );
+            } else {
+                return _react2.default.createElement(
+                    'h4',
+                    { className: 'center-align' },
+                    'Buscando usu\xE1rio...'
+                );
+            }
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            _Person2.default.getSomeone(this.props.params.id).then(function (person) {
+                _this2.setState({ editContact: person, contactName: person.name });
+            }).catch(function (error) {
+                _this2.setState({ notFound: true });
+            });
+        }
+    }, {
+        key: '_getAlert',
+        value: function _getAlert() {
+            if (this.state.showCreationAlert) {
+                return _react2.default.createElement(
+                    _reactBootstrap.Alert,
+                    { bsStyle: 'success', onDismiss: this._handleAlert.bind(this) },
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'Contato salvo com sucesso!'
+                    )
+                );
+            } else if (this.state.showFailAlert) {
+                return _react2.default.createElement(
+                    _reactBootstrap.Alert,
+                    { bsStyle: 'warning', onDismiss: this._handleAlert.bind(this) },
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'Preencha corretamente os dados do contato.'
+                    )
+                );
+            }
+            return "";
+        }
+    }, {
+        key: '_handleAlert',
+        value: function _handleAlert() {
+            this.setState({ showCreationAlert: false, showFailAlert: false });
+        }
+    }, {
+        key: '_handleFailAlert',
+        value: function _handleFailAlert() {
+            this.setState({ showFailAlert: true });
+        }
+    }, {
+        key: '_savePerson',
+        value: function _savePerson() {
+            var _this3 = this;
+
+            _Person2.default.editPerson(this.state.editContact._id, this.state.editContact).then(function () {
+                _this3.setState({ contactName: _this3.state.editContact.name, showCreationAlert: true });
+            });
+        }
+    }]);
+
+    return NewPersonPage;
+}(_react2.default.Component);
+
+exports.default = NewPersonPage;
 
 /***/ })
 /******/ ]);

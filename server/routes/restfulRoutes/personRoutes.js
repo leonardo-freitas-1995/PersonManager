@@ -7,6 +7,7 @@ module.exports = function (app) {
         .post(personController.createNewPerson);
 
     app.route("/api/person/:id")
-        .get(personController.getSomeone);
+        .get(personController.getSomeone)
+        .put(personController.updatePerson);
 
 };

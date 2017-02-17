@@ -39,5 +39,18 @@ module.exports = function(app){
         });
     };
 
+    controller.updatePerson = (req, res) => {
+        let personData = req.body;
+        let id = req.params.id;
+
+        Person.updateOne({_id: id}, personData).exec((error, newPerson) => {
+            if (error){
+                return res.status(503).send();
+            }
+
+            res.send({newPerson});
+        });
+    };
+
     return controller;
 };

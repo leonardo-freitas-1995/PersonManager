@@ -21,6 +21,7 @@ class PersonTable extends React.Component {
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Contato principal</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

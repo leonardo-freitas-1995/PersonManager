@@ -19,7 +19,7 @@ class Person {
 
     static getSomeone(id){
         return new Promise((resolve, reject) => {
-            _resource.get({id: id})
+            _resource.get({id})
             .then(data => {
                 resolve(data.person);
             })
@@ -35,6 +35,18 @@ class Person {
             _resource.post(data)
                 .then(data => {
                     resolve(data.newPerson);
+                })
+                .catch(error => {
+                    reject("error");
+                })
+        })
+    }
+
+    static editPerson(id, data){
+        return new Promise((resolve, reject) => {
+            _resource.put(data, {id})
+                .then(data => {
+                    resolve();
                 })
                 .catch(error => {
                     reject("error");
