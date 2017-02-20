@@ -1,9 +1,6 @@
 import React from 'react';
 import { Router, Route, browserHistory, Redirect } from 'react-router'
-import IndexPage from './../Pages/IndexPage'
-import PersonPage from './../Pages/PersonPage'
-import NewPersonPage from './../Pages/NewPersonPage'
-import EditPersonPage from './../Pages/EditPersonPage'
+import {IndexPage, PersonPage, NewPersonPage, EditPersonPage} from './../Pages/'
 
 class AppRoutes extends React.Component {
     render(){
